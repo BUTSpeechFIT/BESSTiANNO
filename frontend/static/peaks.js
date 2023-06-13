@@ -12981,6 +12981,7 @@ WaveformData.prototype = {
     }
 
     var output_data = [];
+    console.log(options.scale, Math.floor(this.duration * this.sample_rate / options.width))
     var samples_per_pixel = options.scale || Math.floor(this.duration * this.sample_rate / options.width); // scale we want to reach
     var scale = this.scale; // scale we are coming from
     var channel_count = 2 * this.channels;
@@ -14746,7 +14747,8 @@ module.exports = function (PointMarker, Utils, Konva) {
             draggable: editable,
             color: point.color ? point.color : this._peaks.options.pointMarkerColor,
             layer: this,
-            view: this._view.getName()
+            view: this._view.getName(),
+
         });
         return new PointMarker({
             point: point,
@@ -15018,7 +15020,8 @@ module.exports = function (SegmentMarker, WaveformShape) {
             segment: this._segment,
             draggable: editable,
             startMarker: true,
-            color: this._peaks.options.segmentStartMarkerColor,
+            //color: this._peaks.options.segmentStartMarkerColor,
+            color: this._segment.color,
             layer: this._layer,
             view: this._view.getName()
         });
@@ -15038,7 +15041,7 @@ module.exports = function (SegmentMarker, WaveformShape) {
             segment: this._segment,
             draggable: editable,
             startMarker: false,
-            color: this._peaks.options.segmentEndMarkerColor,
+            color: this._segment.color,
             layer: this._layer,
             view: this._view.getName()
         });

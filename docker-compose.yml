@@ -1,0 +1,16 @@
+#podman run -p 8080:8080 --security-opt label=disable  -v /home/ipesan/besst-data/:/data -d besst:0.2
+version: '3.7'
+services:
+  besst:
+    image: besst:0.2
+    volumes:
+      - /home/ipesan/besst-data/:/data
+    ports:
+      - 8080:8080
+    security_opt:
+      - "label=disable"
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: .
+

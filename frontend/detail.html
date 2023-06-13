@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>BESSTiANNO</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div id="tool">
+    <header>
+        <div id="menu">
+
+        </div>
+
+        <div id="title">
+            BESSTiANNO SEGMENTATION TOOL
+        </div>
+
+    </header>
+
+    <div id="video-container">
+        <video id="video" class="video" width="640" height="360" controls muted>
+            <source src="" type="video/mp4">
+        </video>
+    </div>
+    <div id="point-buttons"></div>
+    <div class="loader hide"></div>
+    <div id="waveform-container">
+        <div id="zoomview-container">
+            <div class="loader hide"></div>
+        </div>
+        <div id="overview-container"></div>
+    </div>
+    <div id="controls">
+        <div id="segment-buttons"></div>
+    </div>
+
+
+    <div id="demo-controls">
+        <audio id="audio" class="audio" controls="controls">
+            <source src="" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+
+    </div>
+    <div class="log">
+        <div id="segments" class="sidenav2">
+            <h2>Segments</h2>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>Label</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <div id="segments-controls" class="">
+                <controlDivider></controlDivider>
+                <label for="comment">Comment:</label> <input id='comment' type="text"/>
+                <controlDivider></controlDivider>
+                <label for="complete">Completed</label> <input type="checkbox" id="complete"/>
+                <button class="button-30" data-action="download">Save segmentation</button>
+                <a href="/">Back</a> <span id="result"></span>
+                <controlDivider></controlDivider>
+            </div>
+        </div>
+
+        <div id="points" class="hide sidenav2">
+            <table>
+                <thead>
+                <tr>
+                    <th>Segment</th>
+                    <th>Time</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/static/jquery-3.2.1.min.js"></script>
+<script src="/static/peaks.js"></script>
+<script src="/static/main.js"></script>>
+<div class="modal-spinner"></div>
+<script>
+    $("body").addClass("loading");
+</script>
+</body>
+</html>

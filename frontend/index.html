@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>BESSTiANNO</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div id="tool">
+    <header>
+        <div id="title">
+            BESSTiANNO
+        </div>
+    </header>
+
+    <div id="titles">
+        <table id="sessions">
+            <div class="w3-border">
+                <div class="w3-green" style="height:24px;width:0;text-align: center" id="progressbar"></div>
+            </div>
+            <tr>
+                <th>ID</th>
+                <th>Processed</th>
+                <th>Complete</th>
+                <th>Comment</th>
+                <th>Screen</th>
+                <th>Gender</th>
+                <th>Test</th>
+            </tr>
+        </table>
+    </div>
+</div>
+<script type="text/javascript" src="/static/jquery-3.2.1.min.js"></script>
+<script>
+    var done = 0;
+    var total = 0;
+    $.getJSON("/list", function (data) {
+        $.each(data, function (key, val) {
+            var table = document.getElementById("sessions");
+            row = table.insertRow(1);
+            cell3 = row.insertCell();
+            cell4 = row.insertCell();
+            cell1 = row.insertCell(0);
+            cell2 = row.insertCell(1);
+            cell5 = row.insertCell();
+            cell6 = row.insertCell();
+            cell7 = row.insertCell();
+
+            //cell3 = row.insertCell(2);
+            cell1.innerHTML = "<a href='/detail/" + val[0] + "'>" + val[0] + "</a>";
+            //cell3.innerHTML = val[2];
+            total += 1;
+            console.log(val[1]);
+            if (val[1] === 24) {
+                cell2.innerHTML = val[1] + "/24";
+                cell2.classList.add("w3-light-green");
+
+            } else {
+                cell2.innerHTML = val[1] + "/24";
+                cell2.classList.add("w3-light-gray");
+                //cell2.css("background-color", "gray");
+            }
+            if (val[2] === 1) {
+                cell3.innerHTML = "<input name='done' type='checkbox' checked='checked' disabled='disabled'/>"
+                done += 1;
+            } else {
+                cell3.innerHTML = "<input name='done' type='checkbox' disabled='disabled'/>"
+            }
+            cell4.innerHTML = "<input type='text' value='" + val[3] + "' width='120%' disabled='disabled'/>"
+            cell5.innerHTML = "<img src='/screen/" + val[0] + "' height='85'/>"
+            if (val[4] === "M") {
+                cell6.innerHTML = "<select name='gender' class='gender' id='" + val[0] + "'><option value='M' selected='selected'>M</option><option value='F'>F</option></select>"
+            } else {
+                cell6.innerHTML = "<select name='gender' class='gender' id='" + val[0] + "'><option value='M'>M</option><option value='F' selected='selected'>F</option></select>"
+            }
+            if (val[5] === 1) {
+                cell7.innerHTML = "<select name='test' class='test' id='" + val[0] + "'><option value='1' selected='selected'>yes</option><option value='0'>no</option></select>"
+            } else {
+                cell7.innerHTML = "<select name='test' class='test' id='" + val[0] + "'><option value='1'>yes</option><option value='0' selected='selected'>no</option></select>"
+            }
+        });
+        console.log(done, total);
+        percent_done = (done / total * 100).toFixed(2) + "%"
+        $("#progressbar").css("width", percent_done);
+        $("#progressbar").text(done + " / " + percent_done);
+        $(".gender")
+            .change(function () {
+                $.post("/participant/" + this.id + "/gender", {value: $(this).val()});
+                console.log(this);
+            })
+        $(".test")
+            .change(function () {
+                $.post("/participant/" + this.id + "/test", {value: $(this).val()});
+                console.log(this);
+            })
+    });
+</script>
+</body>
+</html>
